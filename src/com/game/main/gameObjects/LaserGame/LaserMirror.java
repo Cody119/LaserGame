@@ -15,6 +15,11 @@ public class LaserMirror extends ReactLaser {
         reset(e);
     }
 
+    @Override
+    public Laser[] getTargets(GameEngine e, Direction from) {
+        return new Laser[0];
+    }
+
     Point toStrait;
     Point toBent;
 

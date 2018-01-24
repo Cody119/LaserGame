@@ -25,4 +25,6 @@ abstract public class ReactLaser extends Laser {
     public int getLaser(Direction from) {
         return lasersPointing[from.ordinal()] != null ? lasersPointing[from.ordinal()].getState(from.reverse()) : 0;
     }
+
+    abstract public Laser[] getTargets(GameEngine e, Direction from);
 }
