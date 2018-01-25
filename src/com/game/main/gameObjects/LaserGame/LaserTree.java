@@ -10,19 +10,30 @@ import java.util.ArrayList;
 public class LaserTree {
     public Laser[] sources;
 
-    public LaserTree(ArrayList<Laser> lasers, GameEngine engine) {
-        Node[] codes = new Node[lasers.size()];
+    public LaserTree(Laser[] lasers, GameEngine engine) {
+        Node[] codes = new Node[lasers.length];
         for (int i = 0; i < codes.length; i++) {
-            codes[i] = new Node(lasers.get(i));
+            codes[i] = new Node(lasers[i], lasers[i].getTargets(engine));
         }
 
     }
 
+    public static Node[] buildTree(Laser[] lasers, GameEngine engine, boolean[] flags) {
+        ArrayList<Node> nodes = new ArrayList<>();
+        for (int i = 0; i < lasers.length; i++) {
+            if (flags[lasers[i].ref.ref]) {
+
+            }
+        }
+        return nodes;
+    }
+
+
     public class Node {
-        private ArrayList<Node> sources = new ArrayList<>();
+        private Node[] sources;
         private Laser thisLaser;
 
-        public Node(Laser laser) {
+        public Node(Laser laser, Laser[] targets) {
             thisLaser = laser;
         }
     }
