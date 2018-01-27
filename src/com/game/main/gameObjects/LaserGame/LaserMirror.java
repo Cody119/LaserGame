@@ -90,6 +90,11 @@ public class LaserMirror extends ReactLaser {
     }
 
     @Override
+    public boolean isSource() {
+        return false;
+    }
+
+    @Override
     public boolean pointCollides(int x, int y) {
         return self.contains(x, y);
     }

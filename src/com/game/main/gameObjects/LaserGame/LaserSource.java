@@ -39,6 +39,11 @@ public class LaserSource extends Laser {
     }
 
     @Override
+    public boolean isSource() {
+        return true;
+    }
+
+    @Override
     public boolean pointCollides(int x, int y) {
         return self.contains(x, y);
     }

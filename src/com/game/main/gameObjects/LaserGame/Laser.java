@@ -41,13 +41,18 @@ abstract public class Laser implements IInstance {
     //protected boolean set = 1;
     abstract public int getState(Direction from);
 
+    abstract public boolean isSource();
+
     public Laser[] getTargets(GameEngine e) {
-        Point p = rot.getRotation(7, 0);
-        Direction.Pair toIn = rot.raycastPointInst(e.getMainView(), e.getGameObjects(), self.x + 7 + p.x, self.y + 7 + p.y, 8, ref);
+        Direction.Pair toIn = localRayCast(e, rot);
         if (toIn.i instanceof ReactLaser) {
             return ((ReactLaser) toIn.i).getTargets(e, rot);
         }
         return new Laser[0];
     }
 
+    public Direction.Pair localRayCast(GameEngine e, Direction dir) {
+        Point p = dir.getRotation(7, 0);
+        return dir.raycastPointInst(e.getMainView(), e.getGameObjects(), self.x + 7 + p.x, self.y + 7 + p.y, 8, ref);
+    }
 }
