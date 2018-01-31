@@ -10,6 +10,7 @@ import java.awt.*;
  */
 public class LaserSource extends Laser {
     private Point to;
+    private Laser[] targets;
 
     public LaserSource(GameEngine e, int x, int y, Direction rotIn) {
         super(e, x, y, rotIn);
@@ -17,16 +18,18 @@ public class LaserSource extends Laser {
     }
 
     @Override
-    Laser[] reset(GameEngine e) {
-        Point p = rot.getRotation(7, 0);
-        Direction.Pair toIn = rot.raycastPointInst(e.getMainView(), e.getGameObjects(), self.x + 7 + p.x, self.y + 7 + p.y, 8, ref);
-        if (toIn.i instanceof ReactLaser) {
-            ((ReactLaser) toIn.i).addSource(this, rot.reverse());
-            to = toIn.p;
-            return new Laser[]{((Laser) toIn.i)};
+    void reset(GameEngine e) {
+        Direction.Pair toIn = localRayCast(e, rot);
+        if (toIn.i != null) {
+            if (((Laser) toIn.i).addSource(this, rot)) {
+                if (toIn.i instanceof RedirectLaser) {
+                    targets = ((RedirectLaser) toIn.i).getTargets(e, rot);
+                } else {
+                    targets = new Laser[]{ ((Laser) toIn.i) };
+                }
+            }
         }
         to = toIn.p;
-        return new Laser[0];
     }
 
     @Override
@@ -36,6 +39,11 @@ public class LaserSource extends Laser {
         } else {
             return 0;
         }
+    }
+
+    @Override
+    public Laser[] getTargets(GameEngine e) {
+        return targets;
     }
 
     @Override

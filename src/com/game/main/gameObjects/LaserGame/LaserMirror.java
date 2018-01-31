@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by SuperRainbowNinja on 21/01/2018.
  */
-public class LaserMirror extends ReactLaser {
+public class LaserMirror extends RedirectLaser {
     public LaserMirror(GameEngine e, int x, int y, Direction rotIn) {
         super(e, x, y, rotIn);
         reset(e);
@@ -24,30 +24,30 @@ public class LaserMirror extends ReactLaser {
     Point toBent;
 
     @Override
-    Laser[] reset(GameEngine e) {
+    void reset(GameEngine e) {
         //if (lasersPointing[rot.ordinal()] != null && lasersPointing[rot.ordinal()].getState(rot.reverse()) != 0)
-        ArrayList<Laser> retLasers = new ArrayList<>(2);
+        //ArrayList<Laser> retLasers = new ArrayList<>(2);
         {
             Point p = rot.next().getRotation(7, 0);
             Direction.Pair ret = rot.next().raycastPointInst(e.getMainView(), e.getGameObjects(), self.x + 7 + p.x, self.y + 7 + p.y, 8, ref);
             toStrait = ret.p;
-            if (ret.i instanceof ReactLaser) {
-                ((ReactLaser) ret.i).addSource(this, rot.next().reverse());
-                retLasers.add((Laser) ret.i);
-            }
+//            if (ret.i instanceof RedirectLaser) {
+//                ((RedirectLaser) ret.i).addSource(this, rot.next().reverse());
+//                retLasers.add((Laser) ret.i);
+//            }
         }
         //if (lasersPointing[rot.next().ordinal()] != null && lasersPointing[rot.next().ordinal()].getState(rot.next().reverse()) != 0)
         {
             Point p = rot.getRotation(7, 0);
             Direction.Pair ret = rot.raycastPointInst(e.getMainView(), e.getGameObjects(), self.x + 7 + p.x, self.y + 7 + p.y, 8, ref);
             toBent = ret.p;
-            if (ret.i instanceof ReactLaser) {
-                ((ReactLaser) ret.i).addSource(this, rot.reverse());
-                retLasers.add((Laser) ret.i);
-            }
+//            if (ret.i instanceof RedirectLaser) {
+//                ((RedirectLaser) ret.i).addSource(this, rot.reverse());
+//                retLasers.add((Laser) ret.i);
+//            }
         }
         //}
-        return retLasers.toArray(new Laser[retLasers.size()]);
+//        return retLasers.toArray(new Laser[retLasers.size()]);
 //        if (!lasersPointing[rot.ordinal()].isEmpty()) {
 //            strait = false;
 //            Point p = rot.next().getRotation(7, 0);
@@ -92,6 +92,11 @@ public class LaserMirror extends ReactLaser {
     @Override
     public boolean isSource() {
         return false;
+    }
+
+    @Override
+    public Laser[] getTargets(GameEngine e) {
+        return new Laser[0];
     }
 
     @Override

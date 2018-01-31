@@ -36,19 +36,17 @@ abstract public class Laser implements IInstance {
 
     public void step(GameEngine engine, long deltaTime) {}
 
-    abstract Laser[] reset(GameEngine e);
+    abstract void reset(GameEngine e);
 
     //protected boolean set = 1;
     abstract public int getState(Direction from);
 
     abstract public boolean isSource();
 
-    public Laser[] getTargets(GameEngine e) {
-        Direction.Pair toIn = localRayCast(e, rot);
-        if (toIn.i instanceof ReactLaser) {
-            return ((ReactLaser) toIn.i).getTargets(e, rot);
-        }
-        return new Laser[0];
+    abstract public Laser[] getTargets(GameEngine e);
+
+    public boolean addSource(Laser laser, Direction from) {
+        return false;
     }
 
     public Direction.Pair localRayCast(GameEngine e, Direction dir) {

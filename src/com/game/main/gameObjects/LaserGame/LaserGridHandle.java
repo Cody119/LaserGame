@@ -41,7 +41,7 @@ public class LaserGridHandle extends WorldObject<Laser> implements ITickObject {
         for (Laser l : instances) {
             l.reset(game);
         }
-        new LaserTree(instances.toArray(new Laser[laserSources.size()]), game);
+        new LaserTree(instances.toArray(new Laser[instances.size()]), game);
 //        Queue<Laser> lasers = new Queue<>();
 //
 //        for (Laser l : laserSources) {
